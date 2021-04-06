@@ -11,18 +11,21 @@ BOARD_HEIGHT = 20
 
 def get_movement(key, player_coordinate):
     valid_inputs = ["W", "A", "S", "D"]
+    coordinate_x = player_coordinate[0]
+    coordinate_y = player_coordinate[1]
     if key.upper() in valid_inputs:
         if key.upper() == "W":
-            player_coordinate[1] -= 1
+            coordinate_y -= 1
         elif key.upper() == "A":
-            player_coordinate[0] -= 1
+            coordinate_x -= 1
         elif key.upper() == "S":
-            player_coordinate[1] += 1
+            coordinate_y += 1
         elif key.upper() == "D":
-            player_coordinate[0] += 1
+            coordinate_x += 1
     else:
         return
     
+    player_coordinate = (coordinate_x, coordinate_y)
     return player_coordinate
 
 def get_player_character():
@@ -32,7 +35,7 @@ def get_player_character():
     [3]Gandalf 🧙
     """)
     
-    character = int(input("Choose your traveller: "))
+    character = int(input("Choose your character: "))
     
     if character == 1:
         return "🧑", 100
@@ -50,7 +53,7 @@ def create_player(player_coordinate):
     dictionary
     '''
     
-    name = input("Traveller's name: ")
+    name = input("Player's name: ")
     player_icon, health = get_player_character()
     player = {"Player_icon": player_icon, "Player_position": player_coordinate, "Player_name": name, "Health": health}
     
