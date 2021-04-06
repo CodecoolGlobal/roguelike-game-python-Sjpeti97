@@ -27,7 +27,7 @@ def get_movement(key, player_coordinate):
 
 def get_player_character():
     print("""
-    [1]Frodo Baggins 
+    [1]Frodo Baggins 🧑
     [2]Legolas Greenleaf 🧝 
     [3]Gandalf 🧙
     """)
@@ -35,11 +35,11 @@ def get_player_character():
     character = int(input("Choose your traveller: "))
     
     if character == 1:
-        return ""
+        return "🧑", 100
     elif character == 2:
-        return "🧝"
+        return "🧝", 75
     elif character == 3:
-        return "🧙"
+        return "🧙", 50
 
 def create_player(player_coordinate):
     '''
@@ -49,8 +49,10 @@ def create_player(player_coordinate):
     Returns:
     dictionary
     '''
+    
     name = input("Traveller's name: ")
-    player = {"Player_icon": get_player_character(), "Player_position": player_coordinate, "Player_name": name, "Health": 100}
+    player_icon, health = get_player_character()
+    player = {"Player_icon": player_icon, "Player_position": player_coordinate, "Player_name": name, "Health": health}
     
     return player
 
