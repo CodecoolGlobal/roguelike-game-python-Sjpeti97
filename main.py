@@ -22,8 +22,26 @@ def get_movement(key, player_coordinate):
             player_coordinate[0] += 1
     else:
         return
+    
+    return player_coordinate
 
-def create_player():
+def get_player_character():
+    print("""
+    [1]Frodo Baggins 
+    [2]Legolas Greenleaf 🧝 
+    [3]Gandalf 🧙
+    """)
+    
+    character = int(input("Choose your traveller: "))
+    
+    if character == 1:
+        return ""
+    elif character == 2:
+        return "🧝"
+    elif character == 3:
+        return "🧙"
+
+def create_player(player_coordinate):
     '''
     Creates a 'player' dictionary for storing all player related informations - i.e. player icon, player position.
     Fell free to extend this dictionary!
@@ -31,26 +49,31 @@ def create_player():
     Returns:
     dictionary
     '''
-    pass
+    name = input("Traveller's name: ")
+    player = {"Player_icon": get_player_character(), "Player_position": player_coordinate, "Player_name": name, "Health": 100}
+    
+    return player
 
 
 def main():
-    player = create_player()
-    board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
     player_coordinate = (PLAYER_START_X, PLAYER_START_Y)
-    util.clear_screen()
-    is_running = True
-    while is_running:
-        engine.put_player_on_board(board, player)
-        ui.display_board(board)
+    player = create_player(player_coordinate)
+    print(player)
+    # board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
+    # util.clear_screen()
+    # is_running = True
+    # while is_running:
+    #     engine.put_player_on_board(board, player)
+    #     ui.display_board(board)
 
-        key = util.key_pressed()
-        if key == 'q':
-            is_running = False
-        else:
-            pass
-        util.clear_screen()
+    #     key = util.key_pressed()
+    #     if key.upper == 'Q':
+    #         is_running = False
+    #     else:
+    #         pass
+    #     util.clear_screen()
 
 
 if __name__ == '__main__':
     main()
+#🐲👁️
