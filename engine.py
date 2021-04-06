@@ -12,7 +12,7 @@ def create_board(width, height):
     list: Game board
     '''
     set_of_levels = []
-    place_of_previous_gate = None
+    gate = []
     index_of_objects = 0
     objects = ["🟩", "🏠", "🚪", "🟫", "🌳", "🚪", "⬛", "🔥", "🚪" ]
     for number in range(3):
@@ -21,20 +21,19 @@ def create_board(width, height):
         for _ in range(width):
             wall.append(objects[index_of_objects + 1])
         board.append(wall.copy())
-        gate = random.randint(1, height-2)
+        gate.append(random.randint(1, height-2))
         for column in range(height-2):
             row = []
             for index in range(width):
-                if index == 0 and number != 0 and column == place_of_previous_gate:
-                    row.append(objects[index_of_objects + 2])
-                elif column == gate and index == width-1 and number != 2:
-                    place_of_previous_gate = column
+                if column == gate[number] and index == width-1 and number != 2:
                     row.append(objects[index_of_objects + 2])
                 elif index == 0 or index == width-1:
                     row.append(objects[index_of_objects + 1])
                 else:
                     row.append(objects[index_of_objects + 0])
             board.append(row.copy())
+        if number != 0:
+            board[gate[number-1]+1][0] = "🚪"
         board.append(wall.copy())
         set_of_levels.append(board.copy())
         index_of_objects += 3
