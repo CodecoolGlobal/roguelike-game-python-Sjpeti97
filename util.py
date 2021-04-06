@@ -1,7 +1,6 @@
 import sys
 import os
 
-
 def key_pressed():
     try:
         import tty, termios
