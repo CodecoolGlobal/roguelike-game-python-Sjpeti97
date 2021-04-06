@@ -9,6 +9,19 @@ PLAYER_START_Y = 3
 BOARD_WIDTH = 30
 BOARD_HEIGHT = 20
 
+def get_movement(key, player_coordinate):
+    valid_inputs = ["W", "A", "S", "D"]
+    if key.upper() in valid_inputs:
+        if key.upper() == "W":
+            player_coordinate[1] -= 1
+        elif key.upper() == "A":
+            player_coordinate[0] -= 1
+        elif key.upper() == "S":
+            player_coordinate[1] += 1
+        elif key.upper() == "D":
+            player_coordinate[0] += 1
+    else:
+        return
 
 def create_player():
     '''
@@ -24,7 +37,7 @@ def create_player():
 def main():
     player = create_player()
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
-
+    player_coordinate = (PLAYER_START_X, PLAYER_START_Y)
     util.clear_screen()
     is_running = True
     while is_running:
