@@ -75,7 +75,7 @@ def check_gate(board, coordinate_x, coordinate_y):
     return True
 
 
-def put_player_on_board(board, player):
+def put_player_on_board(board, player, old_coordinate):
     '''
     Modifies the game board by placing the player icon at its coordinates.
 
@@ -86,4 +86,6 @@ def put_player_on_board(board, player):
     Returns:
     Nothing
     '''
+    grounds = ["🟩", "🟫", "⬛"]
+    board[old_coordinate[0]][old_coordinate[1]] = grounds[player["Player_position"][2]]
     board[player["Player_position"][0]][player["Player_position"][1]] = player["Player_icon"]
