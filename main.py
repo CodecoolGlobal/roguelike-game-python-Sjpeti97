@@ -19,19 +19,17 @@ def all_items():
     items = {"🍞": 25, "🪓": True, "🏹": True, "🌀": True, "🔰": 25, "💍": 1}
     return items
 
-def check_door(player, old_coordinate):
-    # if player["Ring"] > player["Player_position"][2]:
+def check_door(player):
     if player["Player_position"][1] == 0:
         player["Player_position"][2] -= 1
         player["Player_position"][1] = 28
-        player["Inventory"] 
+
     elif player["Player_position"][1] == 29:
         player["Player_position"][2] += 1
         player["Player_position"][1] = 1
-    # else:
-    #     player["Player_position"][0], player["Player_position"][1] = old_coordinate[0], old_coordinate[1]
-    
 
+def get_enemy_movement(board):
+    pass
 
 def get_movement(key, player_coordinate):
     old_coordinate = player_coordinate.copy()
@@ -141,7 +139,7 @@ def main():
     is_running = True
     while is_running:
         if check_movement(board[player["Player_position"][2]], player):
-            check_door(player, old_coordinate)
+            check_door(player)
             check_item(board[player["Player_position"][2]], player)
             engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate)
         else:

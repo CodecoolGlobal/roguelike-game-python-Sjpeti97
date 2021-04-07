@@ -51,6 +51,7 @@ def create_board(width, height):
         index_of_objects += 3
     create_obstacles_in_boards(set_of_levels)
     placing_items(set_of_levels)
+    create_other_characters(set_of_levels)
     return set_of_levels
 
 
@@ -80,6 +81,20 @@ def create_obstacles_in_boards(set_of_boards, width=30, heigth=20):
                         set_of_boards[number][obstacle_coordinate_y + count][obstacle_coordinate_x] = obstacles[number]
                         numbers_of_obstacles -= 1
     return set_of_boards
+
+def create_other_characters(set_of_boards, width=30, heigth=20):
+    characters = ["🐻", "🐉", "👴"]
+    obstacles = ["🌻", "🍄", "🔥"]
+    items = ["🍞", "🪓", "🏹", "🌀", "🔰", "💍"]
+    for number in range(len(set_of_boards)):
+        for _ in range(6):
+            character_coordinate_x = random.randint(1, width-2)
+            character_coordinate_y = random.randint(1, heigth-2)
+            if set_of_boards[number][character_coordinate_y][character_coordinate_x] not in obstacles and set_of_boards[number][character_coordinate_y][character_coordinate_x] not in items:
+                set_of_boards[number][character_coordinate_y][character_coordinate_x] = characters[number]
+            
+            if number == len(set_of_boards)-1:
+                break
 
 
 def check_gate(board, coordinate_x, coordinate_y):
