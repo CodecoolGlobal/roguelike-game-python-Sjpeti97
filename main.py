@@ -15,6 +15,7 @@ def all_items():
     return items
 
 def get_movement(key, player_coordinate):
+    old_coordinate = player_coordinate.copy()
     valid_inputs = ["W", "A", "S", "D"]
     if key.upper() in valid_inputs:
         if key.upper() == "W":
@@ -25,8 +26,8 @@ def get_movement(key, player_coordinate):
             player_coordinate[0] += 1
         elif key.upper() == "D":
             player_coordinate[1] += 1
-
-    return player_coordinate
+    
+    return player_coordinate, old_coordinate
 
 def check_movement(board, player):
     obstacles = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥"]
@@ -99,19 +100,19 @@ def create_player():
     
     name = input("Player's name: ")
     player_icon, health, max_health = get_player_character()
-    player = {"Player_icon": player_icon, "Player_position": [PLAYER_START_X, PLAYER_START_Y], "Player_name": name, "Health": health, "Armor": 0, "Max_health": max_health, "Ring": False, "Weapon": False, "Inventory": []}
+    player = {"Player_icon": player_icon, "Player_position": [PLAYER_START_X, PLAYER_START_Y, 0], "Player_name": name, "Health": health, "Armor": 0, "Max_health": max_health, "Ring": False, "Weapon": False, "Inventory": []}
     
     return player
 
 
 def main():
+    old_coordinate = [PLAYER_START_X, PLAYER_START_Y, 0]
     player = create_player()
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
     util.clear_screen()
     is_running = True
     while is_running:
-        if check_movement(board, player) is False:
-            engine.put_player_on_board(board[0], player)
+        engine.put_player_on_board(board[0], player, old_coordinate)
         ui.display_board(board[0])
 
         key = util.key_pressed()
@@ -120,7 +121,9 @@ def main():
         elif key.upper() == "I":
             print(player["Inventory"]) 
         else:
-            player["Player_position"] = get_movement(key, player["Player_position"])
+            #new_position = get_movement(key, player["Player_position"])
+            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])
+
             print(player)
             
     
