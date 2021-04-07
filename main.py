@@ -11,7 +11,7 @@ BOARD_HEIGHT = 20
 
 
 def all_items():
-    items = {"🍞": 25, "🗡️": True, "🏹": True, "🪄": True, "🛡️": 25, "💍": True}
+    items = {"🍞": 25, "🗡️": True, "🏹": True, "🌀": True, "🛡️": 25, "💍": True}
     return items
 
 def get_movement(key, player_coordinate):
@@ -29,9 +29,12 @@ def get_movement(key, player_coordinate):
     
     return player_coordinate, old_coordinate
 
-def check_movement(board, player_coordinate):
+def check_movement(board, player):
     obstacles = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥"]
-    pass
+    if board[player["Player_position"][0]][player["Player_position"][1]] in obstacles:
+        return False
+    else:
+        return True
 
 def check_item(board, player):
     items = all_items()
@@ -53,11 +56,11 @@ def check_item(board, player):
             player.update("Inventory" == "🏹")
             if player["Player_icon"] == "🧝":
                 player["Weapon"] == items["🏹"]
-        elif board_position == "🪄":
+        elif board_position == "🌀":
             board_position == " "
-            player.update("Inventory" == "🪄")
+            player.update("Inventory" == "🌀")
             if player["Player_icon"] == "🧙":
-                player["Weapon"] == items["🪄"]
+                player["Weapon"] == items["🌀"]
         
         elif board_position == "🛡️":
             board_position == " "
@@ -107,7 +110,11 @@ def main():
     util.clear_screen()
     is_running = True
     while is_running:
-        engine.put_player_on_board(board[0], player, old_coordinate)
+        valid_move = check_movement(board[0], player)
+        if valid_move == True:
+            engine.put_player_on_board(board[0], player, old_coordinate)
+        else:
+            
         ui.display_board(board[0])
 
         key = util.key_pressed()
@@ -117,12 +124,8 @@ def main():
             print(player["Inventory"]) 
         else:
             #new_position = get_movement(key, player["Player_position"])
-            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])
-
-            print(player)
-            
+            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])            
     
-        
         util.clear_screen()
 
 
