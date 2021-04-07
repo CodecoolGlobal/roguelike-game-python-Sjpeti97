@@ -31,12 +31,10 @@ def get_movement(key, player_coordinate):
 
 def check_movement(board, player):
     obstacles = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥"]
-    #board_position = board[[player["Player_position"[0]]]], [player["Player_position"[1]]]
-    position = player["Player_position"]
-    board_position = board[position[0]][position[1]]
-    print(board_position)
-    # if board_position in obstacles:
-    #     return True
+    if board[player["Player_position"][0]][player["Player_position"][1]] in obstacles:
+        return False
+    else:
+        return True
 
 def check_item(board, player):
     items = all_items()
@@ -112,7 +110,11 @@ def main():
     util.clear_screen()
     is_running = True
     while is_running:
-        engine.put_player_on_board(board[0], player, old_coordinate)
+        valid_move = check_movement(board[0], player)
+        if valid_move == True:
+            engine.put_player_on_board(board[0], player, old_coordinate)
+        else:
+            
         ui.display_board(board[0])
 
         key = util.key_pressed()
@@ -122,12 +124,8 @@ def main():
             print(player["Inventory"]) 
         else:
             #new_position = get_movement(key, player["Player_position"])
-            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])
-
-            print(player)
-            
+            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])            
     
-        
         util.clear_screen()
 
 
