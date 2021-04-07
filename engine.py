@@ -2,7 +2,7 @@ import random
 
 
 def placing_items(set_of_boards, width=30, heigth=20):
-    items = ["🍞", "🗡️", "🏹", "🪄", "🛡️", "💍"]
+    items = ["🍞", "🗡️", "🏹", "🌀", "🛡️", "💍"]
     for board in range(len(set_of_boards)):
         for index in range(len(items)):
             item_coordinate_x = random.randint(1, width-2)

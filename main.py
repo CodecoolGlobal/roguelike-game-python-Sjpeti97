@@ -14,6 +14,7 @@ def all_items():
     items = {"🍞": 25, "🗡️": True, "🏹": True, "🌀": True, "🛡️": 25, "💍": True}
     return items
 
+
 def get_movement(key, player_coordinate):
     old_coordinate = player_coordinate.copy()
     valid_inputs = ["W", "A", "S", "D"]
@@ -29,12 +30,14 @@ def get_movement(key, player_coordinate):
     
     return player_coordinate, old_coordinate
 
+
 def check_movement(board, player):
     obstacles = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥"]
     if board[player["Player_position"][0]][player["Player_position"][1]] in obstacles:
         return False
     else:
         return True
+
 
 def check_item(board, player):
     items = all_items()
@@ -87,6 +90,7 @@ def get_player_character():
     elif character == 3:
         return "🧙", 50, 50
 
+
 def create_player():
     '''
     Creates a 'player' dictionary for storing all player related informations - i.e. player icon, player position.
@@ -110,22 +114,21 @@ def main():
     util.clear_screen()
     is_running = True
     while is_running:
-        valid_move = check_movement(board[0], player)
-        if valid_move == True:
+        if check_movement(board[0], player):
             engine.put_player_on_board(board[0], player, old_coordinate)
         else:
-            
+            player["Player_position"][0], player["Player_position"][1] = old_coordinate[0], old_coordinate[1]
+            engine.put_player_on_board(board[0], player, old_coordinate)
         ui.display_board(board[0])
 
         key = util.key_pressed()
         if key.upper() == 'Q':
-            is_running = False   
+            is_running = False
         elif key.upper() == "I":
             print(player["Inventory"]) 
         else:
-            #new_position = get_movement(key, player["Player_position"])
-            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])            
-    
+            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])           
+
         util.clear_screen()
 
 
