@@ -37,6 +37,7 @@ def create_board(width, height):
         board.append(wall.copy())
         set_of_levels.append(board.copy())
         index_of_objects += 3
+    create_obstacles_in_boards(set_of_levels)
     return set_of_levels
 
 
@@ -73,16 +74,6 @@ def check_gate(board, coordinate_x, coordinate_y):
         return False
     return True
 
-            
-                        
-
-
-def display_board(boards):
-    for board in boards:
-        for row in board:
-            print("".join(row))
-
-display_board(create_obstacles_in_boards(create_board(30, 20)))
 
 def put_player_on_board(board, player):
     '''
@@ -95,4 +86,4 @@ def put_player_on_board(board, player):
     Returns:
     Nothing
     '''
-    pass
+    board[player["Player_position"][0]][player["Player_position"][1]] = player["Player_icon"]

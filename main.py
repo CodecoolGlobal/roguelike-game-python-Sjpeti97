@@ -18,13 +18,13 @@ def get_movement(key, player_coordinate):
     valid_inputs = ["W", "A", "S", "D"]
     if key.upper() in valid_inputs:
         if key.upper() == "W":
-            player_coordinate[1] -= 1
-        elif key.upper() == "A":
             player_coordinate[0] -= 1
+        elif key.upper() == "A":
+            player_coordinate[1] -= 1
         elif key.upper() == "S":
-            player_coordinate[1] += 1
-        elif key.upper() == "D":
             player_coordinate[0] += 1
+        elif key.upper() == "D":
+            player_coordinate[1] += 1
     
     return player_coordinate
 
@@ -102,11 +102,11 @@ def create_player():
 def main():
     player = create_player()
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
-    #util.clear_screen()
+    util.clear_screen()
     is_running = True
     while is_running:
-        engine.put_player_on_board(board, player)
-        ui.display_board(board)
+        engine.put_player_on_board(board[0], player)
+        ui.display_board(board[0])
 
         key = util.key_pressed()
         if key.upper() == 'Q':
@@ -119,7 +119,7 @@ def main():
             
     
         
-        #util.clear_screen()
+        util.clear_screen()
 
 
 if __name__ == '__main__':
