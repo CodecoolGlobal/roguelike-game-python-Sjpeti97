@@ -9,11 +9,24 @@ PLAYER_START_Y = 3
 BOARD_WIDTH = 30
 BOARD_HEIGHT = 20
 
+def check_coordinate():
+    check_door()
+    check_item()
+    check_enemy()
+    pass
 
 def all_items():
     items = {"🍞": 25, "🪓": True, "🏹": True, "🌀": True, "🔰": 25, "💍": True}
     return items
 
+def check_door(player, board):
+    #if board[player["Player_position"][0]][player["Player_position"][1]] == "🚪":
+    if player["Player_position"][1] == 0:
+        player["Player_position"][2] -= 1
+        player["Player_position"][1] = 28
+    elif player["Player_position"][1] == 29:
+        player["Player_position"][2] += 1
+        player["Player_position"][1] = 1
 
 def get_movement(key, player_coordinate):
     old_coordinate = player_coordinate.copy()
@@ -114,12 +127,13 @@ def main():
     util.clear_screen()
     is_running = True
     while is_running:
-        if check_movement(board[0], player):
-            engine.put_player_on_board(board[0], player, old_coordinate)
+        if check_movement(board[player["Player_position"][2]], player):
+            check_door(player, board[player["Player_position"][2]])
+            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate)
         else:
             player["Player_position"][0], player["Player_position"][1] = old_coordinate[0], old_coordinate[1]
-            engine.put_player_on_board(board[0], player, old_coordinate)
-        ui.display_board(board[0])
+            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate)
+        ui.display_board(board[player["Player_position"][2]])
 
         key = util.key_pressed()
         if key.upper() == 'Q':
@@ -130,7 +144,6 @@ def main():
             player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])           
 
         util.clear_screen()
-
 
 if __name__ == '__main__':
     main()
