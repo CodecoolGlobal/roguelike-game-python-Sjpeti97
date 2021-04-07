@@ -51,23 +51,29 @@ def create_obstacles_in_boards(set_of_boards, width=30, heigth=20):
             direction = random.choice(directions)
             if direction == "h":
                 for count in range(3):
-                    if obstacle_coordinate_x in range(width-4, width-1):
+                    if obstacle_coordinate_x in range(width-4, width-1) and check_gate(set_of_boards[number], obstacle_coordinate_x - count, obstacle_coordinate_y):
                         set_of_boards[number][obstacle_coordinate_y][obstacle_coordinate_x - count] = obstacles[number]
                         numbers_of_obstacles -= 1
-                    else:
+                    elif check_gate(set_of_boards[number], obstacle_coordinate_x + count, obstacle_coordinate_y):
                         set_of_boards[number][obstacle_coordinate_y][obstacle_coordinate_x + count] = obstacles[number]
                         numbers_of_obstacles -= 1
             if direction == "v":
                 for count in range(3):
-                    if obstacle_coordinate_y in range(heigth-4, heigth - 1):
+                    if obstacle_coordinate_y in range(heigth-4, heigth - 1) and check_gate(set_of_boards[number], obstacle_coordinate_x, obstacle_coordinate_y - count):
                         set_of_boards[number][obstacle_coordinate_y - count][obstacle_coordinate_x] = obstacles[number]
                         numbers_of_obstacles -= 1
-                    else:
+                    elif check_gate(set_of_boards[number], obstacle_coordinate_x, obstacle_coordinate_y + count):
                         set_of_boards[number][obstacle_coordinate_y + count][obstacle_coordinate_x] = obstacles[number]
                         numbers_of_obstacles -= 1
     return set_of_boards
 
 
+def check_gate(board, coordinate_x, coordinate_y):
+    if board[coordinate_y][coordinate_x + 1] == "🚪" or board[coordinate_y][coordinate_x - 1] == "🚪":
+        return False
+    return True
+
+            
                         
 
 
