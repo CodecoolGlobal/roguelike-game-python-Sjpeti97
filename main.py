@@ -11,7 +11,7 @@ BOARD_HEIGHT = 20
 
 
 def all_items():
-    items = {"🍞": 25, "🗡️": True, "🏹": True, "🪄": True, "🛡️": 25, "💍": True}
+    items = {"🍞": 25, "🗡️": True, "🏹": True, "🌀": True, "🛡️": 25, "💍": True}
     return items
 
 def get_movement(key, player_coordinate):
@@ -25,12 +25,17 @@ def get_movement(key, player_coordinate):
             player_coordinate[0] += 1
         elif key.upper() == "D":
             player_coordinate[1] += 1
-    
+
     return player_coordinate
 
-def check_movement(board, player_coordinate):
+def check_movement(board, player):
     obstacles = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥"]
-    pass
+    #board_position = board[[player["Player_position"[0]]]], [player["Player_position"[1]]]
+    position = player["Player_position"]
+    board_position = board[position[0]][position[1]]
+    print(board_position)
+    # if board_position in obstacles:
+    #     return True
 
 def check_item(board, player):
     items = all_items()
@@ -52,11 +57,11 @@ def check_item(board, player):
             player.update("Inventory" == "🏹")
             if player["Player_icon"] == "🧝":
                 player["Weapon"] == items["🏹"]
-        elif board_position == "🪄":
+        elif board_position == "🌀":
             board_position == " "
-            player.update("Inventory" == "🪄")
+            player.update("Inventory" == "🌀")
             if player["Player_icon"] == "🧙":
-                player["Weapon"] == items["🪄"]
+                player["Weapon"] == items["🌀"]
         
         elif board_position == "🛡️":
             board_position == " "
@@ -105,7 +110,8 @@ def main():
     util.clear_screen()
     is_running = True
     while is_running:
-        engine.put_player_on_board(board[0], player)
+        if check_movement(board, player) is False:
+            engine.put_player_on_board(board[0], player)
         ui.display_board(board[0])
 
         key = util.key_pressed()
