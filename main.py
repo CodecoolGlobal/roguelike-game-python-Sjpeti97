@@ -16,17 +16,22 @@ def check_coordinate():
     pass
 
 def all_items():
-    items = {"🍞": 25, "🪓": True, "🏹": True, "🌀": True, "🔰": 25, "💍": True}
+    items = {"🍞": 25, "🪓": True, "🏹": True, "🌀": True, "🔰": 25, "💍": 1}
     return items
 
-def check_door(player, board):
-    #if board[player["Player_position"][0]][player["Player_position"][1]] == "🚪":
+def check_door(player, old_coordinate):
+    # if player["Ring"] > player["Player_position"][2]:
     if player["Player_position"][1] == 0:
         player["Player_position"][2] -= 1
         player["Player_position"][1] = 28
+        player["Inventory"] 
     elif player["Player_position"][1] == 29:
         player["Player_position"][2] += 1
         player["Player_position"][1] = 1
+    # else:
+    #     player["Player_position"][0], player["Player_position"][1] = old_coordinate[0], old_coordinate[1]
+    
+
 
 def get_movement(key, player_coordinate):
     old_coordinate = player_coordinate.copy()
@@ -45,7 +50,13 @@ def get_movement(key, player_coordinate):
 
 
 def check_movement(board, player):
-    obstacles = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥"]
+    obstacles_with_door = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥", "🚪"]
+    obstacles_without_door = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥"]
+    if player["Ring"] > player["Player_position"][2]:
+        obstacles = obstacles_without_door
+    else:
+        obstacles = obstacles_with_door
+    
     if board[player["Player_position"][0]][player["Player_position"][1]] in obstacles:
         return False
     else:
@@ -58,32 +69,34 @@ def check_item(board, player):
     if board_position in items:
         if board_position == "🍞":
             player["Health"] += items["🍞"]
-            board_position == " "
+
             if player["Health"] > player["Max_health"]:
                 player["Health"] = player["Max_health"]
             
+
         elif board_position == "🪓":
-            board_position == " "
-            player.update("Inventory" == "🪓")
+            # board_position == " "
+            player["Inventory"].append("🪓")
             if player["Player_icon"] == "🧑":
-                player["Weapon"] == items["🪓"]
+                player["Weapon"] = items["🪓"]
         elif board_position == "🏹":
-            board_position == " "
-            player.update("Inventory" == "🏹")
+            # board_position == " "
+            player["Inventory"].append("🏹")
             if player["Player_icon"] == "🧝":
                 player["Weapon"] == items["🏹"]
         elif board_position == "🌀":
-            board_position == " "
-            player.update("Inventory" == "🌀")
+            # board_position == " "
+            player["Inventory"].append("🌀")
             if player["Player_icon"] == "🧙":
                 player["Weapon"] == items["🌀"]
         
         elif board_position == "🔰":
-            board_position == " "
+            # board_position == " "
             player["Armor"] += items["🔰"]
         
         elif board_position == "💍":
-            board_position == " "
+            # board_position == " "
+            player["Inventory"].append("💍")
             player["Ring"] += items["💍"]
 
 
@@ -115,7 +128,7 @@ def create_player():
     
     name = input("Player's name: ")
     player_icon, health, max_health = get_player_character()
-    player = {"Player_icon": player_icon, "Player_position": [PLAYER_START_X, PLAYER_START_Y, 0], "Player_name": name, "Health": health, "Armor": 0, "Max_health": max_health, "Ring": False, "Weapon": False, "Inventory": []}
+    player = {"Player_icon": player_icon, "Player_position": [PLAYER_START_X, PLAYER_START_Y, 0], "Player_name": name, "Health": health, "Armor": 0, "Max_health": max_health, "Ring": 0, "Weapon": False, "Inventory": []}
     
     return player
 
@@ -128,7 +141,8 @@ def main():
     is_running = True
     while is_running:
         if check_movement(board[player["Player_position"][2]], player):
-            check_door(player, board[player["Player_position"][2]])
+            check_door(player, old_coordinate)
+            check_item(board[player["Player_position"][2]], player)
             engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate)
         else:
             player["Player_position"][0], player["Player_position"][1] = old_coordinate[0], old_coordinate[1]
