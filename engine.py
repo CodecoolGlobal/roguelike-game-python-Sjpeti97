@@ -1,5 +1,17 @@
 import random
 
+
+def placing_items(set_of_boards, width=30, heigth=20):
+    items = ["🍞", "🗡️", "🏹", "🪄", "🛡️", "💍"]
+    for board in range(len(set_of_boards)):
+        for index in range(len(items)):
+            item_coordinate_x = random.randint(1, width-2)
+            item_coordinate_y = random.randint(1, heigth-2)
+            set_of_boards[board][item_coordinate_y][item_coordinate_x] = items[index]
+    # for number in range(len(set_of_boards)):
+    #     for
+
+
 def create_board(width, height):
     '''
     Creates a new game board based on input parameters.
@@ -14,7 +26,7 @@ def create_board(width, height):
     set_of_levels = []
     gate = []
     index_of_objects = 0
-    objects = ["🟩", "🏠", "🚪", "🟫", "🌳", "🚪", "⬛", "🌋", "🚪" ]
+    objects = ["🟩", "🏠", "🚪", "🟫", "🌳", "🚪", "⬛", "🌋", "🚪"]
     for number in range(3):
         wall = []
         board = []
@@ -38,6 +50,7 @@ def create_board(width, height):
         set_of_levels.append(board.copy())
         index_of_objects += 3
     create_obstacles_in_boards(set_of_levels)
+    placing_items(set_of_levels)
     return set_of_levels
 
 

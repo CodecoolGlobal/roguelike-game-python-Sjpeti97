@@ -148,3 +148,4 @@ Thumbs.db #thumbnail cache on Windows
 # profiling data
 .prof
 
+.vscode/settings.json
