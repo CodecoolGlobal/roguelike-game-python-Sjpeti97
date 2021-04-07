@@ -11,7 +11,7 @@ BOARD_HEIGHT = 20
 
 
 def all_items():
-    items = {"🍞": 25, "🗡️": True, "🏹": True, "🌀": True, "🛡️": 25, "💍": True}
+    items = {"🍞": 25, "🪓": True, "🏹": True, "🌀": True, "🔰": 25, "💍": True}
     return items
 
 
@@ -49,11 +49,11 @@ def check_item(board, player):
             if player["Health"] > player["Max_health"]:
                 player["Health"] = player["Max_health"]
             
-        elif board_position == "🗡️":
+        elif board_position == "🪓":
             board_position == " "
-            player.update("Inventory" == "🗡️")
+            player.update("Inventory" == "🪓")
             if player["Player_icon"] == "🧑":
-                player["Weapon"] == items["🗡️"]
+                player["Weapon"] == items["🪓"]
         elif board_position == "🏹":
             board_position == " "
             player.update("Inventory" == "🏹")
@@ -65,9 +65,9 @@ def check_item(board, player):
             if player["Player_icon"] == "🧙":
                 player["Weapon"] == items["🌀"]
         
-        elif board_position == "🛡️":
+        elif board_position == "🔰":
             board_position == " "
-            player["Armor"] += items["🛡️"]
+            player["Armor"] += items["🔰"]
         
         elif board_position == "💍":
             board_position == " "
