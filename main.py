@@ -1,6 +1,7 @@
 import util
 import engine
 import ui
+import rouge_like_storymode
 
 PLAYER_ICON = '@'
 PLAYER_START_X = 3
@@ -154,6 +155,7 @@ def create_player():
 
 
 def main():
+    rouge_like_storymode.story()
     old_coordinate = [PLAYER_START_X, PLAYER_START_Y, 0]
     player = create_player()
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
