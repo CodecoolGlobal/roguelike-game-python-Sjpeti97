@@ -138,13 +138,15 @@ def main():
     util.clear_screen()
     is_running = True
     while is_running:
+        old_health = player["Health"]      
         if check_movement(board[player["Player_position"][2]], player):
             check_door(player)
             check_item(board[player["Player_position"][2]], player)
-            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate)
+            engine.common_enemy_figth(player, board)
+            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health)
         else:
             player["Player_position"][0], player["Player_position"][1] = old_coordinate[0], old_coordinate[1]
-            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate)
+            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health)
         ui.display_board(board[player["Player_position"][2]])
 
         key = util.key_pressed()
@@ -153,7 +155,7 @@ def main():
         elif key.upper() == "I":
             print(player["Inventory"]) 
         else:
-            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])           
+            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])     
 
         util.clear_screen()
 

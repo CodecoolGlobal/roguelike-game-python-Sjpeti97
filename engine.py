@@ -1,15 +1,7 @@
 import random
+import ui
 
 
-def placing_items(set_of_boards, width=30, heigth=20):
-    items = ["🍞", "🪓", "🏹", "🌀", "🔰", "💍"]
-    for board in range(len(set_of_boards)):
-        for index in range(len(items)):
-            item_coordinate_x = random.randint(1, width-2)
-            item_coordinate_y = random.randint(1, heigth-2)
-            set_of_boards[board][item_coordinate_y][item_coordinate_x] = items[index]
-    # for number in range(len(set_of_boards)):
-    #     for
 
 
 def create_board(width, height):
@@ -26,8 +18,8 @@ def create_board(width, height):
     set_of_levels = []
     gate = []
     index_of_objects = 0
-    objects = ["🟩", "🏠", "🚪", "🟫", "🌳", "🚪", "⬛", "🌋", "🚪"]
-    for number in range(3):
+    objects = ["🟩", "🏠", "🚪", "🟫", "🌳", "🚪", "⬛", "🌋", "🚪", "⬛", "🌋", "🚪"]
+    for number in range(4):
         wall = []
         board = []
         for _ in range(width):
@@ -37,7 +29,7 @@ def create_board(width, height):
         for column in range(height-2):
             row = []
             for index in range(width):
-                if column == gate[number] and index == width-1 and number != 2:
+                if column == gate[number] and index == width-1 and number != 3:
                     row.append(objects[index_of_objects + 2])
                 elif index == 0 or index == width-1:
                     row.append(objects[index_of_objects + 1])
@@ -55,10 +47,19 @@ def create_board(width, height):
     return set_of_levels
 
 
+def placing_items(set_of_boards, width=30, heigth=20):
+    items = ["🍞", "🪓", "🏹", "🌀", "🔰", "💍"]
+    for board in range(len(set_of_boards)-1):
+        for index in range(len(items)):
+            item_coordinate_x = random.randint(1, width-2)
+            item_coordinate_y = random.randint(1, heigth-2)
+            set_of_boards[board][item_coordinate_y][item_coordinate_x] = items[index]
+
+
 def create_obstacles_in_boards(set_of_boards, width=30, heigth=20):
     obstacles = ["🌻", "🍄", "🔥"]
     directions = ["h", "v"]
-    for number in range(len(set_of_boards)):
+    for number in range(len(set_of_boards)-1):
         numbers_of_obstacles = (width*heigth)//5
         while numbers_of_obstacles > 0:
             obstacle_coordinate_x = random.randint(1, width-2)
@@ -86,14 +87,14 @@ def create_other_characters(set_of_boards, width=30, heigth=20):
     characters = ["🐻", "🐉", "👴"]
     obstacles = ["🌻", "🍄", "🔥"]
     items = ["🍞", "🪓", "🏹", "🌀", "🔰", "💍"]
-    for number in range(len(set_of_boards)):
+    for number in range(len(set_of_boards)-1):
         for _ in range(6):
             character_coordinate_x = random.randint(1, width-2)
             character_coordinate_y = random.randint(1, heigth-2)
             if set_of_boards[number][character_coordinate_y][character_coordinate_x] not in obstacles and set_of_boards[number][character_coordinate_y][character_coordinate_x] not in items:
                 set_of_boards[number][character_coordinate_y][character_coordinate_x] = characters[number]
             
-            if number == len(set_of_boards)-1:
+            if number == len(set_of_boards)-2:
                 break
 
 
@@ -103,7 +104,35 @@ def check_gate(board, coordinate_x, coordinate_y):
     return True
 
 
-def put_player_on_board(board, player, old_coordinate):
+def common_enemy_figth(player, set_of_boards, width=30, heigth=20):
+    enemies = ["🐻", "🐉"]
+    grounds = ["🟩", "🟫"]
+    coordinates = (player["Player_position"][0], player["Player_position"][1])
+    for number in range(len(set_of_boards)-2):
+        if player["Player_icon"] == "🧑":
+            if set_of_boards[number][coordinates[0]][coordinates[1]] == enemies[number]:
+                if "🪓" not in player["Inventory"]:
+                    player["Health"] -= 25
+        if player["Player_icon"] == "🧝":
+            if set_of_boards[number][coordinates[0]][coordinates[1]] == enemies[number]:
+                    player["Health"] -= 25
+            if set_of_boards[number][coordinates[0]][coordinates[1] + 1] == enemies[number]:
+                if "🏹" in player["Inventory"]:
+                    set_of_boards[number][coordinates[0]][coordinates[1] + 1] = grounds[number]
+        if player["Player_icon"] == "🧙":
+            if set_of_boards[number][coordinates[0]][coordinates[1]] == enemies[number]:
+                    player["Health"] -= 25
+            if "🌀" in player["Inventory"]:
+                if set_of_boards[number][coordinates[0]][coordinates[1] + 1] == enemies[number]:
+                    set_of_boards[number][coordinates[0]][coordinates[1] + 1] = grounds[number]
+                if set_of_boards[number][coordinates[0] - 1][coordinates[1]] == enemies[number]:
+                    set_of_boards[number][coordinates[0] - 1][coordinates[1]] = grounds[number]
+                if set_of_boards[number][coordinates[0]+ 1][coordinates[1]] == enemies[number]:
+                    set_of_boards[number][coordinates[0] + 1][coordinates[1]] = grounds[number]
+
+
+
+def put_player_on_board(board, player, old_coordinate, old_health):
     '''
     Modifies the game board by placing the player icon at its coordinates.
 
@@ -114,6 +143,10 @@ def put_player_on_board(board, player, old_coordinate):
     Returns:
     Nothing
     '''
-    grounds = ["🟩", "🟫", "⬛"]
-    board[old_coordinate[0]][old_coordinate[1]] = grounds[player["Player_position"][2]]
+    enemies = ["🐻", "🐉"]
+    grounds = ["🟩", "🟫", "⬛", "⬛"]
+    if board[player["Player_position"][0]][player["Player_position"][1]] in enemies and old_health != player["Health"]:
+        board[old_coordinate[0]][old_coordinate[1]] = enemies[player["Player_position"][2]]
+    else:
+        board[old_coordinate[0]][old_coordinate[1]] = grounds[player["Player_position"][2]]
     board[player["Player_position"][0]][player["Player_position"][1]] = player["Player_icon"]
