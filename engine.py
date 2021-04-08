@@ -101,9 +101,11 @@ def create_other_characters(set_of_boards):
     characters = ["🐻", "🐉", "👴"]
     
     for number in range(len(set_of_boards)):
-        if number == len(set_of_boards)-1:
+        if number == len(set_of_boards)-2:
             coordinates = generate_coordinate(set_of_boards[number])
             set_of_boards[number][coordinates[0]][coordinates[1]] = characters[number]
+        elif number == len(set_of_boards)-1:
+            break
         else:
             for _ in range(6):
                 coordinates = generate_coordinate(set_of_boards[number])
