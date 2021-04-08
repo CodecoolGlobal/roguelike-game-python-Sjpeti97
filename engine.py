@@ -121,45 +121,45 @@ def check_gate(board, coordinate_x, coordinate_y):
     return True
 
 
-def common_enemy_figth(player, set_of_boards, enemy_coordinate):
+def common_enemy_figth(player, set_of_boards, enemy_coordinates):
     enemies = ["🐻", "🐉"]
     grounds = ["🟩", "🟫"]
     coordinates = (player["Player_position"][0], player["Player_position"][1])
-    for enemy in enemy_coordinate[player["Player_position"][2]]:
-        if player["Player_icon"] == "🧑":
-            if player["Player_position"] == enemy:
-                if player["Inventory"]["🪓"] <= player["Player_position"][2]:
+    for enemy in enemy_coordinates:
+        if player["Player_position"][0] == enemy[0] and player["Player_position"][1] == enemy[1]:
+            if player["Player_icon"] == "🧑":
+                if player["Inventory"]["🪓"] == player["Player_position"][2]:
                     if player["Armor"] > 0:
                         player["Armor"] -= 25
+
                     else:
                         player["Health"] -= 25
 
                 else:
-                    enemy[3] = "🟩"
-        if player["Player_icon"] == "🧝":
-            if set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1]] == enemies[player["Player_position"][2]]:
+                    enemy_coordinates.remove(enemy)
+
+            if player["Player_icon"] == "🧝":
                 if player["Inventory"]["🏹"] == player["Player_position"][2]:
                     if player["Armor"] > 0:
                         player["Armor"] -= 25
                     else:
                         player["Health"] -= 25
-            if set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1] + 1] == enemies[player["Player_position"][2]]:
-                if player["Inventory"]["🏹"] > player["Player_position"][2]:
-                    set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1] + 1] = grounds[player["Player_position"][2]]
-        if player["Player_icon"] == "🧙":
-            if set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1]] == enemies[player["Player_position"][2]]:
-                if player["Inventory"]["🌀"] == player["Player_position"][2]:
-                    if player["Armor"] > 0:
-                        player["Armor"] -= 25
-                    else:
-                        player["Health"] -= 25
-            if player["Inventory"]["🌀"] > player["Player_position"][2]:
-                if set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1] + 1] == enemies[player["Player_position"][2]]:
-                    set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1] + 1] = grounds[player["Player_position"][2]]
-                if set_of_boards[player["Player_position"][2]][coordinates[0] - 1][coordinates[1]] == enemies[player["Player_position"][2]]:
-                    set_of_boards[player["Player_position"][2]][coordinates[0] - 1][coordinates[1]] = grounds[player["Player_position"][2]]
-                if set_of_boards[player["Player_position"][2]][coordinates[0] + 1][coordinates[1]] == enemies[player["Player_position"][2]]:
-                    set_of_boards[player["Player_position"][2]][coordinates[0] + 1][coordinates[1]] = grounds[player["Player_position"][2]]
+                    if player["Inventory"]["🏹"] > player["Player_position"][2]:
+                        set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1] + 1] = grounds[player["Player_position"][2]]
+            if player["Player_icon"] == "🧙":
+                if set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1]] == enemies[player["Player_position"][2]]:
+                    if player["Inventory"]["🌀"] == player["Player_position"][2]:
+                        if player["Armor"] > 0:
+                            player["Armor"] -= 25
+                        else:
+                            player["Health"] -= 25
+                if player["Inventory"]["🌀"] > player["Player_position"][2]:
+                    if set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1] + 1] == enemies[player["Player_position"][2]]:
+                        set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1] + 1] = grounds[player["Player_position"][2]]
+                    if set_of_boards[player["Player_position"][2]][coordinates[0] - 1][coordinates[1]] == enemies[player["Player_position"][2]]:
+                        set_of_boards[player["Player_position"][2]][coordinates[0] - 1][coordinates[1]] = grounds[player["Player_position"][2]]
+                    if set_of_boards[player["Player_position"][2]][coordinates[0] + 1][coordinates[1]] == enemies[player["Player_position"][2]]:
+                        set_of_boards[player["Player_position"][2]][coordinates[0] + 1][coordinates[1]] = grounds[player["Player_position"][2]]
 
 
 def put_player_on_board(board, player, old_coordinate, old_health, old_armor):

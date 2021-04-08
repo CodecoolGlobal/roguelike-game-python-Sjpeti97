@@ -121,9 +121,9 @@ def check_item(board, player):
         elif board_position == "🏹":
             player["Inventory"]["🏹"] += 1
         elif board_position == "🌀":
-            player["Inventory"]["🌀"] += 1        
+            player["Inventory"]["🌀"] += 1
         elif board_position == "🔰":
-            player["Armor"] += items["🔰"]       
+            player["Armor"] += items["🔰"]
         elif board_position == "💍":
             player["Inventory"]["💍"] += 1
 
@@ -177,7 +177,7 @@ def main():
         if check_movement(board[player["Player_position"][2]], player):
             check_door(player)
             check_item(board[player["Player_position"][2]], player)
-            engine.common_enemy_figth(player, board, enemy_coordinates)
+            engine.common_enemy_figth(player, board, enemy_coordinates[player["Player_position"][2]])
             engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health, old_armor)
         else:
             player["Player_position"][0], player["Player_position"][1] = old_coordinate[0], old_coordinate[1]
@@ -187,7 +187,7 @@ def main():
         line = ""
         for item, value in player["Inventory"].items():
             line += f"{item}: {value} "
-        print(line) 
+        print(line)
         print(f"🧡: {player['Health']}  🔰: {player['Armor']}")
 
         key = util.key_pressed()
