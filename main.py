@@ -8,6 +8,9 @@ PLAYER_ICON = '@'
 PLAYER_START_X = 3
 PLAYER_START_Y = 3
 
+BOSS_START_X = 27
+BOSS_START_Y = 10
+
 BOARD_WIDTH = 30
 BOARD_HEIGHT = 20
 
@@ -31,6 +34,18 @@ def check_door(player):
     elif player["Player_position"][1] == 29:
         player["Player_position"][2] += 1
         player["Player_position"][1] = 1
+
+def place_boss(board):
+    board[BOSS_START_Y][BOSS_START_X] = "🐉"
+    board[BOSS_START_Y + 1][BOSS_START_X] = "🔥"
+    board[BOSS_START_Y + 1][BOSS_START_X + 1] = "🔥"
+    board[BOSS_START_Y + 1][BOSS_START_X - 1] = "🔥"
+    board[BOSS_START_Y - 1][BOSS_START_X] = "🔥"
+    board[BOSS_START_Y - 1][BOSS_START_X + 1] = "🔥"
+    board[BOSS_START_Y - 1][BOSS_START_X - 1] = "🔥"
+    board[BOSS_START_Y][BOSS_START_X + 1] = "🔥"
+    board[BOSS_START_Y][BOSS_START_X - 1] = "🔥"
+
 
 
 def get_enemy_movement(board, enemy, player_icon):
@@ -59,7 +74,7 @@ def get_enemy_movement(board, enemy, player_icon):
 
 
 def get_enemy_coordinate(boards):
-    enemies = ["🐻", "🐉", "👴", "👁️"]
+    enemies = ["🐻", "🐉", "👴", "🐲"]
     enemy_coordinate = []
     for board in range(len(boards)):
         temp_coordinates = []
@@ -92,11 +107,6 @@ def check_old_man(board, player):
     if board_position == "👴":
         rouge_like_storymode.oldman()
         player["Inventory"]["💍"] += 1
-
-
-def player_movement(board, player, key):
-    new_coordinate, old_coordinate = get_movement()
-    #if check_movement(board, player):
 
 
 def check_movement(board, player):
@@ -145,7 +155,7 @@ def get_player_character():
     if character == 1:
         return "🧑", 100, 100
     elif character == 2:
-        return "🔑", 75, 75
+        return "🧝", 75, 75
     elif character == 3:
         return "🧙", 50, 50
 
@@ -169,13 +179,14 @@ def create_player():
 
 def main():
     util.clear_screen()
-    #rouge_like_storymode.story()
+    rouge_like_storymode.story()
     old_coordinate = [PLAYER_START_X, PLAYER_START_Y, 0]
     player = create_player()
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
     util.clear_screen()
     is_running = True
     enemy_coordinates = get_enemy_coordinate(board)
+    place_boss(board[3])
     while is_running:
         old_health = player["Health"]
         old_armor = player["Armor"]
@@ -206,6 +217,20 @@ def main():
             if player["Player_position"][2] < 2:
                 for coordinate in enemy_coordinates[player["Player_position"][2]]:
                     get_enemy_movement(board[player["Player_position"][2]], coordinate, player["Player_icon"])
+            if player["Player_position"][2] == 3:
+                if board[3][player["Player_position"][0]][player["Player_position"][1]] == "🔥":
+                    if player["Player_icon"] == "🧑" and player["Inventory"]["🪓"] == 3 and (player["Armor"] + player["Health"]) >= player["Max_health"]:
+                        rouge_like_storymode.win()
+                        is_running = False
+                    elif player["Player_icon"] == "🧝" and player["Inventory"]["🏹"] == 3 and (player["Armor"] + player["Health"]) >= player["Max_health"]:
+                        rouge_like_storymode.win()
+                        is_running = False
+                    elif player["Player_icon"] == "🧙" and player["Inventory"]["🌀"] == 3 and (player["Armor"] + player["Health"]) >= player["Max_health"]:
+                        rouge_like_storymode.win()
+                        is_running = False
+                    else:
+                        is_running = False
+                        rouge_like_storymode.dead()
         util.clear_screen()
         if player["Health"] == 0:
             is_running = False
@@ -213,4 +238,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-#🐲👁️         
