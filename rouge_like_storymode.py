@@ -26,8 +26,8 @@ def story():
     time.sleep(1)
     print()
     story_line(text4.center(100))
-    util.clear_screen()
     time.sleep(2)
+    util.clear_screen()
 
     print("""
 ██ ██     ██  █████  ██████  ███    ██ ██ ███    ██  ██████  ██ 

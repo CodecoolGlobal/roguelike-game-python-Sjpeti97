@@ -17,7 +17,7 @@ def check_coordinate():
     pass
 
 def all_items():
-    items = {"🍞": 25, "🪓": True, "🏹": True, "🌀": True, "🔰": 25, "💍": 1}
+    items = {"🍞": 25, "🪓": 1, "🏹": 1, "🌀": 1, "🔰": 25, "💍": 1}
     return items
 
 def check_door(player):
@@ -73,7 +73,7 @@ def get_movement(key, player_coordinate):
 def check_movement(board, player):
     obstacles_with_door = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥", "🚪"]
     obstacles_without_door = ["🏠", "🌻", "🌳", "🍄", "🌋", "🔥"]
-    if player["Ring"] > player["Player_position"][2]:
+    if player["Inventory"]["💍"] > player["Player_position"][2]:
         obstacles = obstacles_without_door
     else:
         obstacles = obstacles_with_door
@@ -90,35 +90,18 @@ def check_item(board, player):
     if board_position in items:
         if board_position == "🍞":
             player["Health"] += items["🍞"]
-
             if player["Health"] > player["Max_health"]:
                 player["Health"] = player["Max_health"]
-            
-
         elif board_position == "🪓":
-            # board_position == " "
-            player["Inventory"].append("🪓")
-            if player["Player_icon"] == "🧑":
-                player["Weapon"] = items["🪓"]
+            player["Inventory"]["🪓"] += 1
         elif board_position == "🏹":
-            # board_position == " "
-            player["Inventory"].append("🏹")
-            if player["Player_icon"] == "🧝":
-                player["Weapon"] == items["🏹"]
+            player["Inventory"]["🏹"] += 1
         elif board_position == "🌀":
-            # board_position == " "
-            player["Inventory"].append("🌀")
-            if player["Player_icon"] == "🧙":
-                player["Weapon"] == items["🌀"]
-        
+            player["Inventory"]["🌀"] += 1        
         elif board_position == "🔰":
-            # board_position == " "
-            player["Armor"] += items["🔰"]
-        
+            player["Inventory"]["🔰"] += 1        
         elif board_position == "💍":
-            # board_position == " "
-            player["Inventory"].append("💍")
-            player["Ring"] += items["💍"]
+            player["Inventory"]["💍"] += 1
 
 
 def get_player_character():
@@ -148,8 +131,9 @@ def create_player():
     '''
     
     name = input("Player's name: ")
+    inventory = {"🪓": 0, "🏹": 0, "🌀": 0, "💍": 0, "🔰": 0}
     player_icon, health, max_health = get_player_character()
-    player = {"Player_icon": player_icon, "Player_position": [PLAYER_START_X, PLAYER_START_Y, 0], "Player_name": name, "Health": health, "Armor": 0, "Max_health": max_health, "Ring": 0, "Weapon": False, "Inventory": []}
+    player = {"Player_icon": player_icon, "Player_position": [PLAYER_START_X, PLAYER_START_Y, 0], "Player_name": name, "Health": health, "Armor": 0, "Max_health": max_health, "Inventory": inventory}
     
     return player
 
