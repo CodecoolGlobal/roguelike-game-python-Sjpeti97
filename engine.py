@@ -131,10 +131,8 @@ def common_enemy_figth(player, set_of_boards, enemy_coordinates):
                 if player["Inventory"]["🪓"] == player["Player_position"][2]:
                     if player["Armor"] > 0:
                         player["Armor"] -= 25
-
                     else:
                         player["Health"] -= 25
-
                 else:
                     enemy_coordinates.remove(enemy)
 
@@ -146,6 +144,7 @@ def common_enemy_figth(player, set_of_boards, enemy_coordinates):
                         player["Health"] -= 25
                     if player["Inventory"]["🏹"] > player["Player_position"][2]:
                         set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1] + 1] = grounds[player["Player_position"][2]]
+
             if player["Player_icon"] == "🧙":
                 if set_of_boards[player["Player_position"][2]][coordinates[0]][coordinates[1]] == enemies[player["Player_position"][2]]:
                     if player["Inventory"]["🌀"] == player["Player_position"][2]:

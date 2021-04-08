@@ -177,8 +177,8 @@ def main():
         if check_movement(board[player["Player_position"][2]], player):
             check_door(player)
             check_item(board[player["Player_position"][2]], player)
-            engine.common_enemy_figth(player, board, enemy_coordinates[player["Player_position"][2]])
             engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health, old_armor)
+            engine.common_enemy_figth(player, board, enemy_coordinates[player["Player_position"][2]])
         else:
             player["Player_position"][0], player["Player_position"][1] = old_coordinate[0], old_coordinate[1]
             engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health, old_armor)
@@ -203,7 +203,7 @@ def main():
         util.clear_screen()
         if player["Health"] == 0:
             is_running = False
-            print("Game Over!")
+            rouge_like_storymode.dead()
 
 if __name__ == '__main__':
     main()
