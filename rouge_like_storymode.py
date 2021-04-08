@@ -41,11 +41,6 @@ def story():
     story_line(text4.center(middle))
     time.sleep(1.5)
     print()
-<<<<<<< HEAD
-    util.clear_screen()
-=======
-    story_line(text4.center(100))
->>>>>>> 9f09f60c6a3c77674145c690515dafaf0ca65afa
     time.sleep(2)
     util.clear_screen()
 

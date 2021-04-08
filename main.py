@@ -159,12 +159,8 @@ def create_player():
 
 
 def main():
-<<<<<<< HEAD
     util.clear_screen()
     rouge_like_storymode.story()
-=======
-    #rouge_like_storymode.story()
->>>>>>> 9f09f60c6a3c77674145c690515dafaf0ca65afa
     old_coordinate = [PLAYER_START_X, PLAYER_START_Y, 0]
     player = create_player()
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
