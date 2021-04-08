@@ -133,6 +133,7 @@ def create_player():
 
 
 def main():
+    util.clear_screen()
     rouge_like_storymode.story()
     old_coordinate = [PLAYER_START_X, PLAYER_START_Y, 0]
     player = create_player()
