@@ -83,19 +83,33 @@ def create_obstacles_in_boards(set_of_boards, width=30, heigth=20):
                         numbers_of_obstacles -= 1
     return set_of_boards
 
-def create_other_characters(set_of_boards, width=30, heigth=20):
-    characters = ["🐻", "🐉", "👴"]
+def generate_coordinate(board):
     obstacles = ["🌻", "🍄", "🔥"]
     items = ["🍞", "🪓", "🏹", "🌀", "🔰", "💍"]
-    for number in range(len(set_of_boards)-1):
-        for _ in range(6):
-            character_coordinate_x = random.randint(1, width-2)
-            character_coordinate_y = random.randint(1, heigth-2)
-            if set_of_boards[number][character_coordinate_y][character_coordinate_x] not in obstacles and set_of_boards[number][character_coordinate_y][character_coordinate_x] not in items:
-                set_of_boards[number][character_coordinate_y][character_coordinate_x] = characters[number]
-            
-            if number == len(set_of_boards)-2:
-                break
+    characters = ["🐻", "🐉", "👴"]
+    
+    character_coordinate_y = random.randint(1, len(board)-2)
+    character_coordinate_x = random.randint(1, len(board[1])-2)
+    
+    while (board[character_coordinate_y][character_coordinate_x] in obstacles or board[character_coordinate_y][character_coordinate_x] in items or board[character_coordinate_y][character_coordinate_x] in characters):
+        character_coordinate_y = random.randint(1, len(board)-2)
+        character_coordinate_x = random.randint(1, len(board[1])-2)
+
+    return [character_coordinate_y, character_coordinate_x]
+
+def create_other_characters(set_of_boards):
+    characters = ["🐻", "🐉", "👴"]
+    
+    for number in range(len(set_of_boards)):
+        if number == len(set_of_boards)-1:
+            coordinates = generate_coordinate(set_of_boards[number])
+            set_of_boards[number][coordinates[0]][coordinates[1]] = characters[number]
+        else:
+            for _ in range(6):
+                coordinates = generate_coordinate(set_of_boards[number])
+                set_of_boards[number][coordinates[0]][coordinates[1]] = characters[number]
+                        
+                    
 
 
 def check_gate(board, coordinate_x, coordinate_y):

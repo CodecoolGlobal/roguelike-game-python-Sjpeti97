@@ -28,8 +28,30 @@ def check_door(player):
         player["Player_position"][2] += 1
         player["Player_position"][1] = 1
 
-def get_enemy_movement(board):
-    pass
+def get_enemy_movement(board, enemy):
+    possible_moves = []
+    enemies = ["🐻", "🐉"]
+    grounds = ["🟩", "🟫"]
+
+
+
+def get_enemy_coordinate(boards):
+    enemies = ["🐻", "🐉", "👴", "👁️"]
+    enemy_coordinate = []
+    for board in range(len(boards)):
+        temp_coordinates = []
+        for row in range(len(boards[board])):
+            for column in range(len(boards[board][row])):
+                if boards[board][row][column] ==  enemies[board]:
+                    temp_coordinates.append([row, column])
+        
+        enemy_coordinate.append(temp_coordinates)
+    
+    return enemy_coordinate
+
+
+
+
 
 def get_movement(key, player_coordinate):
     old_coordinate = player_coordinate.copy()
@@ -137,6 +159,7 @@ def main():
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
     util.clear_screen()
     is_running = True
+    enemy_coordinates = get_enemy_coordinate(board)
     while is_running:
         old_health = player["Health"]      
         if check_movement(board[player["Player_position"][2]], player):
@@ -155,10 +178,10 @@ def main():
         elif key.upper() == "I":
             print(player["Inventory"]) 
         else:
-            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])     
-
+            player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])           
+            get_enemy_movement(board, player)
         util.clear_screen()
 
 if __name__ == '__main__':
     main()
-#🐲👁️
+#🐲👁️         
