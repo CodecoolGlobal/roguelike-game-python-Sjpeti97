@@ -85,8 +85,13 @@ def get_movement(key, current_coordinate):
             current_coordinate[0] += 1
         elif key.upper() == "D":
             current_coordinate[1] += 1
-
     return current_coordinate, old_coordinate
+
+def check_old_man(board, player):
+    board_position = board[player["Player_position"][0]][player["Player_position"][1]]
+    if board_position == "👴":
+        rouge_like_storymode.oldman()
+        player["Inventory"]
 
 
 def player_movement(board, player, key):
@@ -140,7 +145,7 @@ def get_player_character():
     if character == 1:
         return "🧑", 100, 100
     elif character == 2:
-        return "🧝", 75, 75
+        return "🔑", 75, 75
     elif character == 3:
         return "🧙", 50, 50
 
@@ -176,6 +181,7 @@ def main():
         old_armor = player["Armor"]
         if check_movement(board[player["Player_position"][2]], player):
             check_door(player)
+            check_old_man(board[player["Player_position"][2]], player)
             check_item(board[player["Player_position"][2]], player)
             engine.common_enemy_figth(player, board, enemy_coordinates[player["Player_position"][2]])
             engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health, old_armor)

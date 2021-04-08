@@ -96,10 +96,10 @@ def win():
 def oldman():
     util.clear_screen()
     print()
-    text1 = "Hello traveler, I am waiting for you."
-    text2 = "You need to kill the final boss before he attack the city"
-    text3 = "Here is the final key for the fight"
-    text4 = "Good luck! You are our last chance to survive"
+    text1 = "-Hello traveler, I am waiting for you."
+    text2 = "-You need to kill the final boss before he attack the city!"
+    text3 = "-Here is the final key for the fight 🔑 "
+    text4 = "-Good luck! You are our last chance to survive..."
     story_line(text1.center(middle))
     time.sleep(1.5)
     print()
@@ -110,8 +110,9 @@ def oldman():
     time.sleep(1.5)
     print()
     story_line(text4.center(middle))
-    time.sleep(1.5)
+    time.sleep(3)
     print()
+    util.clear_screen()
 
 def flash(text):
     flash_time = 3
