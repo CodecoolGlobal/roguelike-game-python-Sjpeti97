@@ -25,7 +25,7 @@ def story():
     story_line(text.center(middle))
     time.sleep(1.5)
     print()
-    text2 = "* You can choose of 3 characters with different inventories and abilities."
+    text2 = "* You can choose from 3 characters with different inventories and abilities."
     print()
     story_line(text2.center(middle))
     time.sleep(1.5)
@@ -35,7 +35,7 @@ def story():
     story_line(text3.center(middle))
     time.sleep(1.5)
     print()
-    text4 = "* You can restore you healt and put on armor if need."
+    text4 = "* You can restore you health and put on armor if needed."
     time.sleep(1.5)
     print()
     story_line(text4.center(middle))
@@ -55,7 +55,7 @@ def story():
     time.sleep(2)
     util.clear_screen()
     print()
-    text6 = "* You get hit by the enemies without your weapon!"
+    text6 = "* You'll get hit by the enemies without your weapon!"
     story_line(text6.center(middle))
     time.sleep(2)
     util.clear_screen()
@@ -96,9 +96,9 @@ def win():
 def oldman():
     util.clear_screen()
     print()
-    text1 = "-Hello traveler, I am waiting for you."
-    text2 = "-You need to kill the final boss before he attack the city!"
-    text3 = "-Here is the final key for the fight 🔑 "
+    text1 = "-Hello traveler, I have waited for you."
+    text2 = "-You need to kill the final boss before he attacks the city!"
+    text3 = "-Here is the final ring for the fight 💍 "
     text4 = "-Good luck! You are our last chance to survive..."
     story_line(text1.center(middle))
     time.sleep(1.5)

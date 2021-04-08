@@ -54,6 +54,8 @@ def placing_items(set_of_boards, width=30, heigth=20):
                 item_coordinate_y = random.randint(1, heigth-2)
                 if set_of_boards[board][item_coordinate_y][item_coordinate_x] in grounds:
                     break
+            if board == len(set_of_boards)-2 and items[index] == "💍":
+                break
             set_of_boards[board][item_coordinate_y][item_coordinate_x] = items[index]
 
 

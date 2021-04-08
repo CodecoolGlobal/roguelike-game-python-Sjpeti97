@@ -91,7 +91,7 @@ def check_old_man(board, player):
     board_position = board[player["Player_position"][0]][player["Player_position"][1]]
     if board_position == "👴":
         rouge_like_storymode.oldman()
-        player["Inventory"]
+        player["Inventory"]["💍"] += 1
 
 
 def player_movement(board, player, key):
