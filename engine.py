@@ -127,7 +127,7 @@ def common_enemy_figth(player, set_of_boards, width=30, heigth=20):
     for number in range(len(set_of_boards)-2):
         if player["Player_icon"] == "🧑":
             if set_of_boards[number][coordinates[0]][coordinates[1]] == enemies[number]:
-                if "🪓" not in player["Inventory"]:
+                if player["Inventory"]["🪓"] == number:
                     player["Health"] -= 25
         if player["Player_icon"] == "🧝":
             if set_of_boards[number][coordinates[0]][coordinates[1]] == enemies[number]:
