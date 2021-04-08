@@ -1,6 +1,7 @@
 import time
 import shutil
 import operator
+import util
 
 
 def story():
@@ -25,7 +26,8 @@ def story():
     time.sleep(1)
     print()
     story_line(text4.center(100))
-    #util.clear_screen()
+    util.clear_screen()
+    time.sleep(2)
 
     print("""
 ██ ██     ██  █████  ██████  ███    ██ ██ ███    ██  ██████  ██ 
@@ -36,11 +38,11 @@ def story():
 """)
 
     time.sleep(2)
-    #util.clear_screen()
     print()
     text6 = "* You get hit by the enemies without your weapon!"
     story_line(text6)
-    #util.clear_screen()
+    time.sleep(2)
+    util.clear_screen()
 
     luck = """
  ██████   ██████   ██████  ██████      ██      ██    ██  ██████ ██   ██ ██ 
@@ -51,7 +53,7 @@ def story():
 """
     text_line(luck)
     time.sleep(2)
-    #util.clear_screen()
+    util.clear_screen()
 
 def story_line(text):
     for char in text:
@@ -64,5 +66,3 @@ def text_line(text):
         print(char, sep=' ', end='', flush=True)
         time.sleep(0.005)
     print() 
-
-story()
