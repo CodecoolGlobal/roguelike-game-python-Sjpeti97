@@ -99,7 +99,7 @@ def check_item(board, player):
         elif board_position == "🌀":
             player["Inventory"]["🌀"] += 1        
         elif board_position == "🔰":
-            player["Inventory"]["🔰"] += 1        
+            player["Armor"] += items["🔰"]       
         elif board_position == "💍":
             player["Inventory"]["💍"] += 1
 
@@ -131,7 +131,7 @@ def create_player():
     '''
     
     name = input("Player's name: ")
-    inventory = {"🪓": 0, "🏹": 0, "🌀": 0, "💍": 0, "🔰": 0}
+    inventory = {"🪓": 0, "🏹": 0, "🌀": 0, "💍": 0}
     player_icon, health, max_health = get_player_character()
     player = {"Player_icon": player_icon, "Player_position": [PLAYER_START_X, PLAYER_START_Y, 0], "Player_name": name, "Health": health, "Armor": 0, "Max_health": max_health, "Inventory": inventory}
     
@@ -147,26 +147,35 @@ def main():
     is_running = True
     enemy_coordinates = get_enemy_coordinate(board)
     while is_running:
-        old_health = player["Health"]      
+        old_health = player["Health"] 
+        old_armor = player["Armor"]  
         if check_movement(board[player["Player_position"][2]], player):
             check_door(player)
             check_item(board[player["Player_position"][2]], player)
             engine.common_enemy_figth(player, board)
-            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health)
+            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health, old_armor)
         else:
             player["Player_position"][0], player["Player_position"][1] = old_coordinate[0], old_coordinate[1]
-            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health)
+            engine.put_player_on_board(board[player["Player_position"][2]], player, old_coordinate, old_health, old_armor)
         ui.display_board(board[player["Player_position"][2]])
+        line = ""
+        for item, value in player["Inventory"].items():
+            line += f"{item}: {value} "
+        print(line) 
+        print(f"🧡: {player['Health']}  🔰: {player['Armor']}")
 
         key = util.key_pressed()
         if key.upper() == 'Q':
             is_running = False
         elif key.upper() == "I":
-            print(player["Inventory"]) 
+            pass
         else:
             player["Player_position"], old_coordinate = get_movement(key, player["Player_position"])           
             get_enemy_movement(board, player)
         util.clear_screen()
+        if player["Health"] == 0:
+            is_running = False
+            print("Game Over!")
 
 if __name__ == '__main__':
     main()

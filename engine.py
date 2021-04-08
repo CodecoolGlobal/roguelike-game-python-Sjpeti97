@@ -49,10 +49,14 @@ def create_board(width, height):
 
 def placing_items(set_of_boards, width=30, heigth=20):
     items = ["🍞", "🪓", "🏹", "🌀", "🔰", "💍"]
+    grounds = ["🟩", "🟫", "⬛"]
     for board in range(len(set_of_boards)-1):
         for index in range(len(items)):
-            item_coordinate_x = random.randint(1, width-2)
-            item_coordinate_y = random.randint(1, heigth-2)
+            while True:
+                item_coordinate_x = random.randint(1, width-2)
+                item_coordinate_y = random.randint(1, heigth-2)
+                if set_of_boards[board][item_coordinate_y][item_coordinate_x] in grounds:
+                    break
             set_of_boards[board][item_coordinate_y][item_coordinate_x] = items[index]
 
 
@@ -128,17 +132,28 @@ def common_enemy_figth(player, set_of_boards, width=30, heigth=20):
         if player["Player_icon"] == "🧑":
             if set_of_boards[number][coordinates[0]][coordinates[1]] == enemies[number]:
                 if player["Inventory"]["🪓"] == number:
-                    player["Health"] -= 25
+                    if player["Armor"] > 0:
+                        player["Armor"] -= 25
+                    else:
+                        player["Health"] -= 25
         if player["Player_icon"] == "🧝":
             if set_of_boards[number][coordinates[0]][coordinates[1]] == enemies[number]:
-                    player["Health"] -= 25
+                if player["Inventory"]["🏹"] == number:
+                    if player["Armor"] > 0:
+                        player["Armor"] -= 25
+                    else:
+                        player["Health"] -= 25
             if set_of_boards[number][coordinates[0]][coordinates[1] + 1] == enemies[number]:
-                if "🏹" in player["Inventory"]:
+                if player["Inventory"]["🏹"] > number:
                     set_of_boards[number][coordinates[0]][coordinates[1] + 1] = grounds[number]
         if player["Player_icon"] == "🧙":
             if set_of_boards[number][coordinates[0]][coordinates[1]] == enemies[number]:
-                    player["Health"] -= 25
-            if "🌀" in player["Inventory"]:
+                if player["Inventory"]["🌀"] == number:
+                    if player["Armor"] > 0:
+                        player["Armor"] -= 25
+                    else:
+                        player["Health"] -= 25
+            if player["Inventory"]["🌀"] > number:
                 if set_of_boards[number][coordinates[0]][coordinates[1] + 1] == enemies[number]:
                     set_of_boards[number][coordinates[0]][coordinates[1] + 1] = grounds[number]
                 if set_of_boards[number][coordinates[0] - 1][coordinates[1]] == enemies[number]:
@@ -148,7 +163,7 @@ def common_enemy_figth(player, set_of_boards, width=30, heigth=20):
 
 
 
-def put_player_on_board(board, player, old_coordinate, old_health):
+def put_player_on_board(board, player, old_coordinate, old_health, old_armor):
     '''
     Modifies the game board by placing the player icon at its coordinates.
 
@@ -161,7 +176,7 @@ def put_player_on_board(board, player, old_coordinate, old_health):
     '''
     enemies = ["🐻", "🐉"]
     grounds = ["🟩", "🟫", "⬛", "⬛"]
-    if board[player["Player_position"][0]][player["Player_position"][1]] in enemies and old_health != player["Health"]:
+    if board[player["Player_position"][0]][player["Player_position"][1]] in enemies and (old_health != player["Health"] or old_armor != player["Armor"]):
         board[old_coordinate[0]][old_coordinate[1]] = enemies[player["Player_position"][2]]
     else:
         board[old_coordinate[0]][old_coordinate[1]] = grounds[player["Player_position"][2]]
