@@ -207,7 +207,7 @@ def create_player():
 
 def main_game():
     util.clear_screen()
-    #rouge_like_storymode.story()
+    rouge_like_storymode.story()
     old_coordinate = [PLAYER_START_X, PLAYER_START_Y, 0]
     player = create_player()
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
@@ -287,15 +287,15 @@ def main():
         print("[H]Hall Of Fame".center(middle))
         print()
         print("[E]Exit]".center(middle))
-        main_input = str(input())
-        if main_input.upper() == "G":
+        key = util.key_pressed()
+    
+        if key.upper() == "G":
             is_running2 = False
             main_game()
-        if main_input.upper() == "H":
+        elif key.upper() == "H":
             hall()
             main()
-        if main_input.upper() == "E":
-            is_running2 = False
+
         else:
             KeyError("invalid input!")
 

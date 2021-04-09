@@ -35,7 +35,7 @@ def story():
     story_line(text3.center(middle))
     time.sleep(1.5)
     print()
-    text4 = "* You can restore you health and put on armor if needed."
+    text4 = "* You can restore your health and put on armor if needed."
     time.sleep(1.5)
     print()
     story_line(text4.center(middle))
@@ -74,11 +74,11 @@ def story():
 def dead():
     util.clear_screen()
     text_dead = """      
-    ██    ██ ██████ ██    ██      █████ ██████ ███████     ██████ ███████ █████ ██████      ██ 
-     ██  ██ ██    ████    ██     ██   ████   ████          ██   ████     ██   ████   ██     ██ 
-      ████  ██    ████    ██     █████████████ █████       ██   ███████  █████████   ██     ██ 
-       ██   ██    ████    ██     ██   ████   ████          ██   ████     ██   ████   ██        
-       ██    ██████  ██████      ██   ████   █████████     ██████ █████████   ████████      ██ 
+    ██    ██ ██████  ██    ██      █████  ██████  ███████     ██████  ███████  █████  ██████      ██ 
+     ██  ██ ██    ██ ██    ██     ██   ██ ██   ██ ██          ██   ██ ██      ██   ██ ██   ██     ██ 
+      ████  ██    ██ ██    ██     ███████ ██████  █████       ██   ██ █████   ███████ ██   ██     ██ 
+       ██   ██    ██ ██    ██     ██   ██ ██   ██ ██          ██   ██ ██      ██   ██ ██   ██        
+       ██    ██████   ██████      ██   ██ ██   ██ ███████     ██████  ███████ ██   ██ ██████      ██ 
        """
     flash(text_dead)
 
@@ -140,7 +140,3 @@ def text_line(text):
         print(char, sep=' ', end='', flush=True)
         time.sleep(0.005)
     print() 
-
-
-
-    
