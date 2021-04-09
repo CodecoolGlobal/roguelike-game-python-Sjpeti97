@@ -3,17 +3,22 @@ import engine
 import ui
 import rouge_like_storymode
 import random
+import shutil
+
+#terminal_middle
+middle = shutil.get_terminal_size().columns
 
 PLAYER_ICON = '@'
 PLAYER_START_X = 3
 PLAYER_START_Y = 3
 
-BOSS_START_X = 27
-BOSS_START_Y = 10
+BOSS_START_X = 26
+BOSS_START_Y = 3
 
 BOARD_WIDTH = 30
 BOARD_HEIGHT = 20
 
+hall_of_fame = ["Péter", "Tamás", "Kristóf", "András", "Bálint"]
 
 def check_coordinate():
     check_door()
@@ -45,6 +50,29 @@ def place_boss(board):
     board[BOSS_START_Y - 1][BOSS_START_X - 1] = "🔥"
     board[BOSS_START_Y][BOSS_START_X + 1] = "🔥"
     board[BOSS_START_Y][BOSS_START_X - 1] = "🔥"
+    board[BOSS_START_Y + 2][BOSS_START_X] = "🔥"
+    board[BOSS_START_Y + 2][BOSS_START_X + 2] = "🔥"
+    board[BOSS_START_Y + 2][BOSS_START_X - 2] = "🔥"
+    board[BOSS_START_Y - 2][BOSS_START_X] = "🔥"
+    board[BOSS_START_Y - 2][BOSS_START_X + 2] = "🔥"
+    board[BOSS_START_Y - 2][BOSS_START_X - 2] = "🔥"
+    board[BOSS_START_Y][BOSS_START_X + 2] = "🔥"
+    board[BOSS_START_Y][BOSS_START_X - 2] = "🔥"
+    board[BOSS_START_Y - 1][BOSS_START_X + 2] = "🔥"
+    board[BOSS_START_Y - 1][BOSS_START_X - 2] = "🔥"
+    board[BOSS_START_Y - 2][BOSS_START_X + 1] = "🔥"
+    board[BOSS_START_Y - 2][BOSS_START_X - 1] = "🔥"
+    board[BOSS_START_Y + 2][BOSS_START_X] = "🔥"
+    board[BOSS_START_Y + 2][BOSS_START_X] = "🔥"
+    board[BOSS_START_Y +2][BOSS_START_X+1] = "🔥"
+    board[BOSS_START_Y-2][BOSS_START_X-1] = "🔥"
+    board[BOSS_START_Y+1][BOSS_START_X+2] = "🔥"
+    board[BOSS_START_Y-1][BOSS_START_X-2] = "🔥"
+    board[BOSS_START_Y -2][BOSS_START_X+1] = "🔥"
+    board[BOSS_START_Y +1][BOSS_START_X-2] = "🔥"
+    board[BOSS_START_Y -2][BOSS_START_X-1] = "🔥"
+    board[BOSS_START_Y +2][BOSS_START_X-1] = "🔥"
+
 
 
 
@@ -177,9 +205,9 @@ def create_player():
     return player
 
 
-def main():
+def main_game():
     util.clear_screen()
-    rouge_like_storymode.story()
+    #rouge_like_storymode.story()
     old_coordinate = [PLAYER_START_X, PLAYER_START_Y, 0]
     player = create_player()
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
@@ -221,12 +249,15 @@ def main():
                 if board[3][player["Player_position"][0]][player["Player_position"][1]] == "🔥":
                     if player["Player_icon"] == "🧑" and player["Inventory"]["🪓"] == 3 and (player["Armor"] + player["Health"]) >= player["Max_health"]:
                         rouge_like_storymode.win()
+                        hall_of_fame.append(player["Player_name"])
                         is_running = False
                     elif player["Player_icon"] == "🧝" and player["Inventory"]["🏹"] == 3 and (player["Armor"] + player["Health"]) >= player["Max_health"]:
                         rouge_like_storymode.win()
+                        hall_of_fame.append(player["Player_name"])
                         is_running = False
                     elif player["Player_icon"] == "🧙" and player["Inventory"]["🌀"] == 3 and (player["Armor"] + player["Health"]) >= player["Max_health"]:
                         rouge_like_storymode.win()
+                        hall_of_fame.append(player["Player_name"])
                         is_running = False
                     else:
                         is_running = False
@@ -235,6 +266,39 @@ def main():
         if player["Health"] == 0:
             is_running = False
             rouge_like_storymode.dead()
+
+def hall():
+    for i in range(len(hall_of_fame)):
+        rouge_like_storymode.text_line(hall_of_fame[i])
+    input()
+    main()
+
+
+
+def main():
+    util.clear_screen()
+    is_running2 = True
+    while is_running2:
+        util.clear_screen()
+        print()
+        print("*   Lord Of The PA     *".center(middle))
+        print()
+        print("[G]Play Game".center(middle))
+        print("[H]Hall Of Fame".center(middle))
+        print()
+        print("[E]Exit]".center(middle))
+        main_input = str(input())
+        if main_input.upper() == "G":
+            is_running2 = False
+            main_game()
+        if main_input.upper() == "H":
+            hall()
+            main()
+        if main_input.upper() == "E":
+            is_running2 = False
+        else:
+            KeyError("invalid input!")
+
 
 if __name__ == '__main__':
     main()

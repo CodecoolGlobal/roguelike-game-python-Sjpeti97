@@ -97,9 +97,11 @@ def oldman():
     util.clear_screen()
     print()
     text1 = "-Hello traveler, I have waited for you."
-    text2 = "-You need to kill the final boss before he attacks the city!"
+    text2 = "-You have to kill the final boss before he attacks the city!"
     text3 = "-Here is the final ring for the fight 💍 "
     text4 = "-Good luck! You are our last chance to survive..."
+    text5 = "HINT: Do you have the rigth weapon's level?"
+    text6 = "HINT: Do you have enough healt and armor?"
     story_line(text1.center(middle))
     time.sleep(1.5)
     print()
@@ -111,6 +113,12 @@ def oldman():
     print()
     story_line(text4.center(middle))
     time.sleep(3)
+    print()
+    story_line(text5.center(middle))
+    time.sleep(1.5)
+    print()
+    story_line(text6.center(middle))
+    time.sleep(1.5)
     print()
     util.clear_screen()
 
@@ -132,3 +140,7 @@ def text_line(text):
         print(char, sep=' ', end='', flush=True)
         time.sleep(0.005)
     print() 
+
+
+
+    
